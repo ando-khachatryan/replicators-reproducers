@@ -7,3 +7,4 @@ The notebooks contain in-line comments.
 It is best to start with the Fig.4acdf.nb file, which contains detailed comments.
 
 Figure 2 is in the python folder, along with the simulator we used for the runs.
+A notebook demonstating how to run the simulations for Figure 2 will be added later.  
