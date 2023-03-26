@@ -1,12 +1,21 @@
-try:
-    from .cell import Cell, Environment, FoodFlowEnvironment
-except:
-    from cell import Cell, Environment, FoodFlowEnvironment
+# try:
+#     from .cell import Cell, Environment, FoodFlowEnvironment
+# except:
+#     from cell import Cell, Environment, FoodFlowEnvironment
 
-try:
-    from .callbacks import default_stats_collector, parasite_stats_collector
-except:
-    from callbacks import default_stats_collector, parasite_stats_collector
+# try:
+#     from .callbacks import default_stats_collector, parasite_stats_collector
+# except:
+#     from callbacks import default_stats_collector, parasite_stats_collector
+from .cell import Cell, Environment, FoodFlowEnvironment
+from .callbacks import default_stats_collector, parasite_stats_collector
+# except:
+#     from cell import Cell, Environment, FoodFlowEnvironment
+
+
+# except:
+#     from callbacks import default_stats_collector, parasite_stats_collector
+
 
 import plot_helpers as ph
 
@@ -35,23 +44,6 @@ def shuffle(n):
     indices = np.arange(n)
     np.random.shuffle(indices)
     return indices
-
-# logger = logging.getLogger()
-# logger.addHandler(logging.StreamHandler(stream=sys.stdout))
-# logger.setLevel(logging.DEBUG)
-
-# def dprint(s):
-#     # print(s)
-#     pass
-
-# def set_logging(level, filename=None):
-#     logger = logging.getLogger()
-#     logger.addHandler(logging.StreamHandler(stream=sys.stdout))
-#     logger.setLevel(level)
-#     if filename is not None:
-#         filehandler = logging.FileHandler(filename=filename)
-#         filehandler.setLevel(level)
-#         logger.addHandler(filehandler)
 
 
 @ray.remote
@@ -121,13 +113,6 @@ def run_multiple_sims(sim_param_li: List):
     results = ray.get(funcs)
     results = [t[1] for t in sorted(results, key=lambda t: t[0])]
     return results
-# def run_multiple_sims(sim_param_li: List):
-#     # , sim_type: Union[str, List[str]]):
-#     results = []
-#     for i, sim_params in enumerate(sim_param_li):
-#         results.append(run_sim(**({'sim_id': i} | sim_params)))
-#     return results
-
 
 
 def get_timestamp():
@@ -162,10 +147,6 @@ def run_from_folder(folder):
     ss = {
         key.replace('-', '_'): value for key, value in settings['simulation'].items()
     }
-    # if 'gather-stats-every' in settings['simulation']: 
-    #     ss['gather_stats_every'] = settings['simulation']['gather-stats-every']
-    # if 'print-progress' in settings['simulation']:
-    #     ss['print_progress'] = settings['simulation']['print-progress']
     del ss['number_of_runs']
     del ss['initial_cell_count']
     sim_param_li = [
@@ -341,19 +322,6 @@ def run_one_vs_grid(
                 "base-metabolism-energy": float(bm_range[bmi]),
                 "replication-fidelity": float(rf_range[rfj]),
             }
-            # if st_range is not None:
-            #     lf_cell["energy-threshold-for-split"] = float(st_range[bmi])
-            #     hf_cell["energy-threshold-for-split"] = float(st_range[bmi+1])
-
-            # if st_range is not None:
-            #     this_folder = ( f'bm-low = {bm_range[bmi]:.3f} '
-            #                     f'rf-low = {rf_range[rfj]:.3f} '
-            #                     f'st-low = {st_range[bmi]:.3f} '
-            #                     f'bm-hi  = {bm_range[bmi+1]:.3f} '
-            #                     f'rf-hi = {rf_range[rfj+1]:.3f}'
-            #                     f'st-hi = {st_range[bmi+1]:.3f}'
-            #                   )
-            # else:
             this_folder = '(bm={bm0:.4f}, rf={rf0:.4f}) vs (bm={bm1:.4f}, rf={rf1:.4f})'.format(
                 bm0 = base_cell_params["base-metabolism-energy"],
                 rf0 = base_cell_params["replication-fidelity"],

@@ -1,4 +1,4 @@
-from sim import TypedCellInfo
+from sim.callbacks import TypedCellInfo
 
 import jsonpickle
 from pathlib import Path 
